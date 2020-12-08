@@ -14,3 +14,7 @@ run `yarn build` or `npm run build`
 npm i -g live-server
 live-server public
 ```
+
+### More
+
+Concise note available at

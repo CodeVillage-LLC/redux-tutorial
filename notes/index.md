@@ -69,3 +69,164 @@ note over Store: Our entire UI/React App depends soley on the store to render ev
 
 ![Bug Tracker](./bugTracker.png)
 ![Bug Tracker](./bugTrackerSimplified.png)
+
+## Steps
+
+1. Design the store
+2. define the actions
+3. create a reducer
+4. setup store
+
+### 1. design the store
+
+```js
+// minimal
+store = [
+  {
+    id: 1,
+    description: "...",
+    resolved: false
+  },
+  {...},
+  {...}
+]
+
+// more featured
+store = {
+  bugs: [
+    {
+      id: 1,
+      description: "app crashes when reset button is clicked",
+      resolved: true,
+      resolvedBy: "userId"
+    }
+  ],
+  currentUser: {
+    userId: 7,
+    name: 'Mubarak Sanusi',
+    email: 'mbsanusi@mockmail.com'
+  }
+}
+```
+
+in the example above, for minimal, we don't need more than 1 reducer but as for `more featured` we can use either one reducer or 2 reducers
+
+### 2. Define the actions
+
+- add a bug
+- mark a bug as resolved
+- delete a bug
+
+> we could sort, change status and so on but we want to keep this simple first
+
+#### anatomy of action
+
+```js
+{
+  type: "ADD_BUG",
+  description: "app crashes when reset button is clicked"
+}
+// type has to be string
+// underscore and uppercase is just a convention
+// in fact some people prefer "bugAdded" instead
+
+// overall, I prefer this
+{
+ type: "ADD_BUG",
+ payload: {
+   description: "description of the bug"
+ }
+}
+
+{
+  type: "RESOLVE_BUG",
+  payload: {
+    id: 1
+  }
+}
+
+{
+  type: "REMOVE_BUG",
+  payload: {
+    id: 1
+  }
+}
+```
+
+### 3. create a reducer
+
+```js
+const reducer = (state, action) => {
+  if (action.type === "ADD_BUG") {
+    return state.concat({
+      id: state.length + 1,
+      description: action.payload.description,
+      resolved: false,
+    });
+  } else if (action.type === "REMOVE_BUG") {
+    return state.filter((bug) => bug.id !== action.payload.id);
+  } else if (action.type === "RESOLVE_BUG") {
+    return state.map((bug) => {
+      if (bug.id === action.payload.id) {
+        bug.resolved = true;
+      }
+
+      return bug;
+    });
+  }
+
+  return state;
+};
+```
+
+### 4. setup store
+
+```js
+// in our reducer file, set initial state and export the reducer like so
+export default reducer = (state = [], action) => {
+	...
+}
+
+// in store index file
+import { createStore } from 'redux'
+import reducer from './reducer'
+
+const store = createStore(reducer)
+// createStore an high order function that takes a function as an argument
+
+export default store
+```
+
+### Lets use our store!
+
+```jsx
+import store from './store'
+
+console.log(store)
+console.log(store.getState())
+
+store.dispatch({
+  type: "ADD_BUG",
+	payload: {
+		description: "app crashes when reset button is clicked"
+	}
+})
+
+store.dispatch({
+  type: "ADD_BUG",
+	payload: {
+		description: "add bug doesn't work"
+	}
+})
+
+console.log(store.getState())
+
+store.dispatch({
+  type: "REMOVE_BUG",
+	payload: {
+		id: 2
+	}
+})
+
+console.log(store.getState())
+```
