@@ -1,18 +1,20 @@
 "use strict";
 
-function sayHello() {
-  return "hello Villagers";
+var _immer = require("immer");
+
+var book = {
+  title: "You don't know JS"
+};
+
+function publish(book) {
+  return (0, _immer.produce)(book, function (draftBook) {
+    draftBook.isPublished = true;
+    draftBook.title = "We don't know JS";
+  });
 }
 
-function sayHi() {
-  return "Hi Villagers 👋";
-}
-
-var fn = sayHello;
-
-function greet(fnMessage) {
-  console.log(fnMessage());
-}
-
-greet(sayHello);
-greet(sayHi);
+var publishedBook = publish(book);
+console.log({
+  book: book,
+  publishedBook: publishedBook
+});
