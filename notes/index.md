@@ -200,33 +200,66 @@ export default store
 ### Lets use our store!
 
 ```jsx
-import store from './store'
+import store from "./store";
 
-console.log(store)
-console.log(store.getState())
-
-store.dispatch({
-  type: "ADD_BUG",
-	payload: {
-		description: "app crashes when reset button is clicked"
-	}
-})
+console.log(store);
+console.log(store.getState());
 
 store.dispatch({
   type: "ADD_BUG",
-	payload: {
-		description: "add bug doesn't work"
-	}
-})
+  payload: {
+    description: "app crashes when reset button is clicked",
+  },
+});
 
-console.log(store.getState())
+store.dispatch({
+  type: "ADD_BUG",
+  payload: {
+    description: "add bug doesn't work",
+  },
+});
+
+console.log(store.getState());
 
 store.dispatch({
   type: "REMOVE_BUG",
-	payload: {
-		id: 2
-	}
-})
+  payload: {
+    id: 2,
+  },
+});
 
-console.log(store.getState())
+console.log(store.getState());
+```
+
+### store subscription
+
+```jsx
+import store from "./store";
+
+const unsubscribe = store.subscribe(() => {
+  console.log("store changed", store.getState());
+});
+
+store.dispatch({
+  type: "ADD_BUG",
+  payload: {
+    description: "app crashes when reset button is clicked",
+  },
+});
+
+store.dispatch({
+  type: "ADD_BUG",
+  payload: {
+    description: "add bug doesn't work",
+  },
+});
+
+
+unsubscribe();
+store.dispatch({
+  type: "REMOVE_BUG",
+  payload: {
+    id: 2,
+  },
+});
 ```
