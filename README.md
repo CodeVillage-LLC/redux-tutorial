@@ -8,13 +8,14 @@
 
 run `yarn build` or `npm run build`
 
-### run code with live server
+### run code
 
-```bash
-npm i -g live-server
-live-server public
+- Run `yarn dev` in one terminal to serve the public folder, this picks up changes from compiled code
+- Run `yarn build` anytime you paste code from `./note` and you want to see the changes
+
 ```
 
 ### More
 
 Concise note available at
+```
