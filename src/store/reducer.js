@@ -4,22 +4,22 @@ export default (state = [], action) => {
       return [
         ...state,
         {
-          description: action.payload.description,
           id: state.length + 1,
-          resolved: false,
+          description: action.payload.description,
+          resolve: false,
         },
       ];
       break;
-    case "REMOVE_BUG":
-      return state.filter((bug) => bug.id !== action.payload.id);
     case "RESOLVE_BUG":
       return state.map((bug) => {
-        if (bug.id === action.payload.id) {
-          bug.resolved = true;
-        }
+        if (bug.id === action.payload.id) bug.resolved = true;
 
         return bug;
       });
+      break;
+    case "REMOVE_BUG":
+      return state.filter((bug) => bug.id !== action.payload.id);
+      break;
     default:
       return state;
       break;

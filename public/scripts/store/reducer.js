@@ -16,25 +16,24 @@ var _default = function _default() {
   switch (action.type) {
     case "ADD_BUG":
       return [].concat((0, _toConsumableArray2["default"])(state), [{
-        description: action.payload.description,
         id: state.length + 1,
-        resolved: false
+        description: action.payload.description,
+        resolve: false
       }]);
+      break;
+
+    case "RESOLVE_BUG":
+      return state.map(function (bug) {
+        if (bug.id === action.payload.id) bug.resolved = true;
+        return bug;
+      });
       break;
 
     case "REMOVE_BUG":
       return state.filter(function (bug) {
         return bug.id !== action.payload.id;
       });
-
-    case "RESOLVE_BUG":
-      return state.map(function (bug) {
-        if (bug.id === action.payload.id) {
-          bug.resolved = true;
-        }
-
-        return bug;
-      });
+      break;
 
     default:
       return state;

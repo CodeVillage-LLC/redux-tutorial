@@ -1,13 +1,17 @@
 import store from "./store";
-// import * as Actions from './store/actions'
 import { addBug, removeBug, resolveBug } from "./store/actions";
 
-store.subscribe(() => {
+const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
 });
 
-store.dispatch(addBug("test bug"));
-store.dispatch(addBug("another bug"));
+const id = () => Math.random().toString(36).substring(2, 6);
+
+store.dispatch(addBug("reset button dissapear when user want to click on it"));
+store.dispatch(addBug("app crashes after 32 mins of runtime"));
+store.dispatch(addBug("layout looks distorted on iPhone12"));
+
+unsubscribe();
+
 store.dispatch(resolveBug(2));
 store.dispatch(removeBug(1));
-store.dispatch(addBug("login button dissapears on click"));
