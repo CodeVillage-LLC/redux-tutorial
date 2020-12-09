@@ -1,6 +1,6 @@
 ## Functional programming
 
-> Functional programming is a pattern where problems are broken down into small and small and reusable functions that takes some inputs and return some result
+> Functional programming is a pattern where problems are broken down into small and reusable functions that takes some inputs and return some result
 
 example of pure functions
 
@@ -126,7 +126,7 @@ const output2 = transform2(input);
 console.log({ input, output1, output2 });
 ```
 
-the snippet above will throw the error: `lodash.min.js:55 Uncaught TypeError: Expected a function` because only functions can be passed to `pipe`
+the snippet above will throw the error: `Uncaught TypeError: Expected a function` because only functions can be passed as `pipe` arguments
 
 To fix this problem, we need to apply a method called _Currying_
 
@@ -141,12 +141,12 @@ function cAdd(a) {
     return a + b;
   };
 }
-console.log(add(7, 3));
-console.log(cAdd(7)(3));
+console.log(add(7, 3)); // 10
+console.log(cAdd(7)(3)); // 10
 
-console.log(typeof add);
-console.log(typeof add(5));
-console.log(typeof cAdd(5));
+console.log(typeof add); // function
+console.log(typeof add(5)); // string
+console.log(typeof cAdd(5)); // function
 
 function wrapInTag(tag) {
   return function (str) {
@@ -166,7 +166,7 @@ const wrapInTag = (tag) => (str) => `<${tag}>${str}</${tag}>`;
 Now let's put everything together
 
 ```js
-import { compose, pipe } from "lodash/fp";
+import { pipe } from "lodash/fp";
 const input = "    Jalasem  ";
 
 const trim = (str) => str.trim();
@@ -200,7 +200,7 @@ const fn = (number) => number * 2; // is pure because if it's called a billion t
 > - Reducers have to be pure function. Please take note
 
 ```js
-const canPass = (age) => age > minAge; // is not pure because minAge is not defined withing the scope of the function
+const canPass = (age) => age > minAge; // is not pure because minAge is not defined within the scope of the function
 const canPass = (age, minAge) => age > minAge;
 ```
 
@@ -278,7 +278,7 @@ console.log({ person, ahPerson, mubPerson });
 
 paste the code above in your index.js and watch out for anormally in the console.
 
-> The anormally you notice in the address object is due to the fact that Javascript `Object.assign` method and `spread` operator only perform shallow copying. If you need to update the memebers of an object which are also object(s) or array. Do this instead;
+> The anormally you notice in the address object is due to the fact that Javascript `Object.assign` method and `spread` operator only perform shallow copying. If you need to update the members of an object which are also object(s) or array. Do this instead;
 
 ```js
 const person = {

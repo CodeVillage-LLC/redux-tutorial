@@ -53,6 +53,8 @@ function reducer(store, action) {
 
 ### How Redux works
 
+> Paste the code below to websequencediagrams.com
+
 ```websequencediagrams.com
 title How Redux works
 
@@ -64,6 +66,9 @@ note over Store: a JS object that maintain our app state
 note over Store: our single source of truth
 note over Store: Our entire UI/React App depends soley on the store to render everything you're seeing that could change
 ```
+
+you'll get this
+![How redux works](./how-redux-works.png)
 
 ## Bug Tracker
 
@@ -253,7 +258,6 @@ store.dispatch({
     description: "add bug doesn't work",
   },
 });
-
 
 unsubscribe();
 store.dispatch({
