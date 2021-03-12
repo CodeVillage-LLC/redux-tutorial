@@ -17,5 +17,5 @@ run `yarn build` or `npm run build`
 
 ### More
 
-Concise note available at
+Concise note available on [notion](https://www.notion.so/Redux-18ba53ded41742aea1e2680400a89e80)
 ```
